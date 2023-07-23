@@ -26,13 +26,14 @@ def get_data():
     with connecting() as connect:
         with connect.cursor() as cursor:
             cursor.execute("SELECT urls.id, urls.name, url_checks.created_at, "
-                         "url_checks.status_code "
-                         "FROM urls LEFT JOIN url_checks "
-                         "ON urls.id = url_checks.url_id "
-                         "WHERE url_checks.url_id IS NULL OR "
-                         "url_checks.id = (SELECT MAX(url_checks.id) "
-                         "FROM url_checks WHERE url_checks.url_id = urls.id) "
-                         "ORDER BY urls.id DESC")
+                           "url_checks.status_code "
+                           "FROM urls LEFT JOIN url_checks "
+                           "ON urls.id = url_checks.url_id "
+                           "WHERE url_checks.url_id IS NULL OR "
+                           "url_checks.id = (SELECT MAX(url_checks.id) "
+                           "FROM url_checks "
+                           "WHERE url_checks.url_id = urls.id) "
+                           "ORDER BY urls.id DESC")
             url_data = cursor.fetchall()
     connect.close()
     return url_data
@@ -42,7 +43,7 @@ def get_info(id):
     with connecting() as connect:
         with connect.cursor() as cursor:
             cursor.execute("SELECT id, name, created_at FROM urls "
-                         "WHERE id = %s", (id,))
+                           "WHERE id = %s", (id,))
             url_info = cursor.fetchone()
     connect.close()
     return url_info
@@ -61,8 +62,8 @@ def add_into_data_base(url, today):
     with connecting() as connect:
         with connect.cursor() as cursor:
             cursor.execute("INSERT INTO urls (name, created_at) "
-                         "VALUES (%s, %s) RETURNING id",
-                         (url, today))
+                           "VALUES (%s, %s) RETURNING id",
+                           (url, today))
             result = cursor.fetchone()
     connect.close()
     return result
@@ -72,9 +73,9 @@ def check_result(id, data, today_date):
     with connecting() as connect:
         with connect.cursor() as cursor:
             cursor.execute("INSERT INTO url_checks "
-                         "(url_id, status_code, h1, title, description, "
-                         "created_at) "
-                         "VALUES (%s, %s, %s, %s, %s, %s)",
-                         (id, data['status_code'], data['h1'],
-                          data['title'], data['description'], today_date,))
+                           "(url_id, status_code, h1, title, description, "
+                           "created_at) "
+                           "VALUES (%s, %s, %s, %s, %s, %s)",
+                           (id, data['status_code'], data['h1'],
+                            data['title'], data['description'], today_date,))
     connect.close()
