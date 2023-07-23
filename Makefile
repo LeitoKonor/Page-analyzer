@@ -31,6 +31,6 @@ connect:
 	psql -d $(DB_NAME)
 
 
-test:
+lint:
 	poetry run flake8 page_analyzer
 

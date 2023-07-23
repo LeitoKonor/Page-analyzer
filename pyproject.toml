@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Page analyzer - analyzes pages for SEO suitability"
 authors = ["LeitoKonor <joltrico96@gmail.com>"]
 readme = "README.md"
-packages = [{include = "hexlet_code"}]
+packages = [{include = "page_analyzer"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
