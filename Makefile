@@ -8,8 +8,8 @@ PORT ?= 8000
 start:
 	poetry run gunicorn -w 5 -b 0.0.0.0:$(PORT) page_analyzer:app
 
-DB_NAME=pageanalyzer
-DB_USER=leitokonor
+DB_NAME=pageanalyzer_7v4j
+DB_USER=WSCahH0QGmfLaz6sRG2rPZFu1XA9AWoz
 
 db-build:
 	db-drop db-create schema-load
@@ -22,14 +22,6 @@ db-create:
 
 schema-load:
 	psql $(DB_NAME) < database.sql
-
-db-reset:
-	dropdb $(DB_NAME) || true
-	createdb $(DB_NAME)
-
-connect:
-	psql -d $(DB_NAME)
-
 
 lint:
 	poetry run flake8 page_analyzer
