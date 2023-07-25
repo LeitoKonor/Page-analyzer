@@ -1,22 +1,11 @@
-from flask import (
-    Flask,
-    flash,
-    get_flashed_messages,
-    render_template,
-    request,
-    redirect,
-    url_for)
+from flask import (Flask, flash, get_flashed_messages,
+                   render_template, request, redirect, url_for)
 import os
 from dotenv import load_dotenv
 from datetime import date
 from page_analyzer.url import url_analyzes, url_check, make_check
-from page_analyzer.data_base import (
-    get_id,
-    add_into_data_base,
-    get_data,
-    get_info,
-    check_info,
-    check_result)
+from page_analyzer.data_base import (get_id, add_into_data_base, get_data,
+                                     get_info, check_info, check_result)
 
 
 app = Flask(__name__)
@@ -56,14 +45,14 @@ def post_url():
     result = get_id(parse)
     if result:
         (url_id, *_) = result
-        flash('Страница уже проверена', category="alert alert-info")
+        flash('Страница уже существует', category="alert alert-info")
         return redirect(url_for('show_url', id=url_id))
 
     else:
         id_info = add_into_data_base(parse, today)
         (url_id, *_) = id_info
 
-        flash('Страница добавлена', category="alert alert-success")
+        flash('Страница успешно добавлена', category="alert alert-success")
         return redirect(url_for('show_url', id=url_id))
 
 
@@ -97,13 +86,13 @@ def url_validation(id):
     check = make_check(url_name)
 
     if check is None:
-        flash('Ошибка проверки', category="alert alert-danger")
+        flash('Произошла ошибка при проверке', category="alert alert-danger")
         return redirect(url_for('show_url', id=id))
 
     today = date.today()
     check_result(id, check, today)
 
-    flash('Проверка пройдена', category='alert alert-success')
+    flash('Страница успешно проверена', category='alert alert-success')
     return redirect(url_for('show_url', id=id))
 
 

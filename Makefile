@@ -23,6 +23,6 @@ db-create:
 schema-load:
 	psql $(DB_NAME) < database.sql
 
-lint:
+test:
 	poetry run flake8 page_analyzer
 
