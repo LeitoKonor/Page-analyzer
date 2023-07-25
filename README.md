@@ -11,9 +11,9 @@ Page analyzer - analyzes pages for SEO suitability
 
 https://pageanalyzer-jo4q.onrender.com
 
-### Requerments:
+### Requerements:
 
-- Python = 3.10.6
+- Python >= 3.10.6
 - flask >= 2.3.2
 - gunicorn >= 20.1.0
 - python-dotenv >= 1.0.0
