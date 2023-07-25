@@ -58,7 +58,7 @@ def check_info(id):
     return check_result
 
 
-def add_into_data_base(url, today):
+def add_into_database(url, today):
     with connecting() as connect:
         with connect.cursor() as cursor:
             cursor.execute("INSERT INTO urls (name, created_at) "

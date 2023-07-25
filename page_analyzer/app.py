@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from datetime import date
 from page_analyzer.url import url_analyzes, url_check, make_check
-from page_analyzer.data_base import (get_id, add_into_data_base, get_data,
+from page_analyzer.database import (get_id, add_into_database, get_data,
                                      get_info, check_info, check_result)
 
 
@@ -49,7 +49,7 @@ def post_url():
         return redirect(url_for('show_url', id=url_id))
 
     else:
-        id_info = add_into_data_base(parse, today)
+        id_info = add_into_database(parse, today)
         (url_id, *_) = id_info
 
         flash('Страница успешно добавлена', category="alert alert-success")

@@ -8,20 +8,17 @@ PORT ?= 8000
 start:
 	poetry run gunicorn -w 5 -b 0.0.0.0:$(PORT) page_analyzer:app
 
-DB_NAME=pageanalyzer
-DB_USER=leitokonor
-
 db-build:
 	db-drop db-create schema-load
 
 db-drop:
-	dropdb $(DB_NAME)
+	dropdb pageanalyzer
 
 db-create:
-	createdb $(DB_NAME)
+	createdb pageanalyzer
 
 schema-load:
-	psql $(DB_NAME) < database.sql
+	psql pageanalyzer < database.sql
 
 test:
 	poetry run flake8 page_analyzer
