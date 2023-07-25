@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from datetime import date
 from page_analyzer.url import url_analyzes, url_check, make_check
 from page_analyzer.database import (get_id, add_into_database, get_data,
-                                     get_info, check_info, check_result)
+                                    get_info, check_info, check_result)
 
 
 app = Flask(__name__)
