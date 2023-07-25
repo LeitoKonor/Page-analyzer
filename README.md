@@ -32,8 +32,6 @@ cd python-project-83
 
 make install
 
-make dev
-
 make schema-load
 
 make start
