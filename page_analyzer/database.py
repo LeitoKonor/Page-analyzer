@@ -7,12 +7,12 @@ load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 
-def connecting():
+def get_connection():
     return psycopg2.connect(DATABASE_URL)
 
 
 def get_id(url):
-    with connecting() as connect:
+    with get_connection() as connect:
         with connect.cursor() as cursor:
             cursor.execute(
                 "SELECT id FROM urls WHERE name = %s", (url,)
@@ -23,7 +23,7 @@ def get_id(url):
 
 
 def get_data():
-    with connecting() as connect:
+    with get_connection() as connect:
         with connect.cursor() as cursor:
             cursor.execute("SELECT urls.id, urls.name, url_checks.created_at, "
                            "url_checks.status_code "
@@ -40,7 +40,7 @@ def get_data():
 
 
 def get_info(id):
-    with connecting() as connect:
+    with get_connection() as connect:
         with connect.cursor() as cursor:
             cursor.execute("SELECT id, name, created_at FROM urls "
                            "WHERE id = %s", (id,))
@@ -50,7 +50,7 @@ def get_info(id):
 
 
 def check_info(id):
-    with connecting() as connect:
+    with get_connection() as connect:
         with connect.cursor() as cursor:
             cursor.execute("SELECT * FROM url_checks WHERE url_id = %s", (id,))
             check_result = cursor.fetchall()
@@ -59,7 +59,7 @@ def check_info(id):
 
 
 def add_into_database(url, today):
-    with connecting() as connect:
+    with get_connection() as connect:
         with connect.cursor() as cursor:
             cursor.execute("INSERT INTO urls (name, created_at) "
                            "VALUES (%s, %s) RETURNING id",
@@ -70,7 +70,7 @@ def add_into_database(url, today):
 
 
 def check_result(id, data, today_date):
-    with connecting() as connect:
+    with get_connection() as connect:
         with connect.cursor() as cursor:
             cursor.execute("INSERT INTO url_checks "
                            "(url_id, status_code, h1, title, description, "
